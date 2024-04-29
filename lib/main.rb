@@ -15,9 +15,9 @@ File.open(filename, 'r') do |f|
     when :init_game
       start_game
     when :kill
-      game.add_kill_from_entry(entry)
+      current_game.add_kill(entry.kill_info)
     when :shutdown_game
-      game.shutdown
+      current_game.shutdown
     else line_not_used
     end
   end
@@ -25,6 +25,10 @@ end
 
 def start_game
   @games.append(Game.new)
+end
+
+def current_game
+  @games.last
 end
 
 # Split line

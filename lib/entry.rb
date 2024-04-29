@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 class Entry
+  attr_accessor :type
   def initialize(log_line)
-    @line_array = log_line.split
+    @log_line = log_line
   end
 
   def type
-    # TODO: Implement type
-    :type
+    @type ||= @log_line.split[1].gsub(':', '').downcase.to_sym
   end
 end
