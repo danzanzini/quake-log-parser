@@ -1,3 +1,5 @@
+require 'bundler/setup'
+
 require_relative 'entry'
 
 # TODO: Add option to receive from input
