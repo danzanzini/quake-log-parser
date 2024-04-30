@@ -39,4 +39,12 @@ class EntryTest < Minitest::Test
     entry = Entry.new('21:07 Kill: 1022 2 22: <world> killed Isgalamido by MOD_TRIGGER_HURT')
     assert entry.client_id.nil?
   end
+
+  def test_it_gets_the_client_name
+    entry = Entry.new('21:15 ClientUserinfoChanged: 2 n\Isgalamido\t\0\model\uriel/zael\hmodel\uriel/zael\g_redteam')
+    assert entry.client_name == 'Isgalamido'
+
+    entry = Entry.new('21:15 ClientUserinfoChanged: 2 n\Dono da Bola\t\0\model\uriel/zael\hmodel\uriel/zael\g_redteam')
+    assert entry.client_name == 'Dono da Bola'
+  end
 end

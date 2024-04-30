@@ -16,4 +16,8 @@ class Entry
   def client_id
     @client_id ||= %i[client_begin client_connect client_userinfo_changed].include?(type) ? @log_array[2].to_i : nil
   end
+
+  def client_name
+    @client_name ||= (@log_line.split('n\\').last.split('\\t').first if type == :client_userinfo_changed)
+  end
 end
