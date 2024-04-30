@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'minitest/autorun'
 require_relative '../../lib/entry'
 
@@ -35,7 +37,6 @@ class EntryTest < Minitest::Test
 
   def test_it_returns_nil_for_client_id_when_appropriate
     entry = Entry.new('21:07 Kill: 1022 2 22: <world> killed Isgalamido by MOD_TRIGGER_HURT')
-    assert entry.client_id == nil
+    assert entry.client_id.nil?
   end
-
 end

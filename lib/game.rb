@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 class Game
   attr_reader :shutdown, :players
+
   def initialize
     @shutdown = false
     @players = []
@@ -11,6 +14,7 @@ class Game
 
   class Player
     attr_reader :id
+
     def initialize(id)
       @id = id
     end

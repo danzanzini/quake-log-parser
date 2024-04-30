@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 ruby '3.3.0'
@@ -6,5 +8,7 @@ ruby '3.3.0'
 
 gem 'minitest', '~> 5.22', '>= 5.22.3'
 gem 'simplecov'
+
+gem 'rubocop', '~> 1.62', '>= 1.62.1', require: false
 
 gem 'activesupport', '~> 7.1', '>= 7.1.3.2'
