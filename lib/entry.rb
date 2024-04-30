@@ -6,6 +6,6 @@ class Entry
   end
 
   def type
-    @type ||= @log_line.split[1].gsub(':', '').downcase.to_sym
+    @type ||= @log_line.split[1].gsub(':', '').underscore.to_sym
   end
 end
