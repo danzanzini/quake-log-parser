@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class Game
-  attr_reader :shutdown, :players
+  attr_reader :shutdown, :players, :kills
 
   def initialize
     @shutdown = false
     @players = []
+    @kills = []
   end
 
   def connect_client(client_id)
@@ -17,6 +18,10 @@ class Game
     client&.name = name
   end
 
+  def add_kill(killer: nil, killed: nil, mod: nil)
+    @kills.append(Kill.new(killer, killed, mod))
+  end
+
   class Player
     attr_reader :id
     attr_accessor :name
@@ -24,6 +29,15 @@ class Game
     def initialize(id)
       @id = id
       @name = nil
+    end
+  end
+
+  class Kill
+    attr_reader :killer_id, :killed_id, :mod_id
+    def initialize(killer_id, killed_id, mod_id)
+      @killer_id = killer_id
+      @killed_id = killed_id
+      @mod_id = mod_id
     end
   end
 end

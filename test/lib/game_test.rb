@@ -31,4 +31,15 @@ class GameTest < Minitest::Test
     game.update_client(1, 'Primeiro Jogador')
     assert game.players.first&.name == 'Primeiro Jogador'
   end
+
+  def test_it_adds_a_kill
+    game = Game.new
+    game.add_kill(killer: 1, killed: 2, mod: 3)
+    assert game.kills.count == 1
+
+    kill = game.kills.first
+    assert kill&.killer_id == 1
+    assert kill&.killed_id == 2
+    assert kill&.mod_id == 3
+  end
 end

@@ -18,6 +18,10 @@ class Entry
   end
 
   def client_name
-    @client_name ||= (@log_line.split('n\\').last.split('\\t').first if type == :client_userinfo_changed)
+    @client_name ||= @log_line.split('n\\').last.split('\\t').first if type == :client_userinfo_changed
+  end
+
+  def kill_info
+    @kill_info ||= { killer: @log_array[2].to_i, killed: @log_array[3].to_i, mod: @log_array[4].to_i } if type == :kill
   end
 end

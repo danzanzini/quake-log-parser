@@ -47,4 +47,9 @@ class EntryTest < Minitest::Test
     entry = Entry.new('21:15 ClientUserinfoChanged: 2 n\Dono da Bola\t\0\model\uriel/zael\hmodel\uriel/zael\g_redteam')
     assert entry.client_name == 'Dono da Bola'
   end
+
+  def test_it_gets_the_kill_info
+    entry = Entry.new(' 10:38 Kill: 5 7 6: Oootsimo killed Assasinu Credi by MOD_ROCKET')
+    assert entry.kill_info == { killer: 5, killed: 7, mod: 6 }
+  end
 end
