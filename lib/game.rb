@@ -18,8 +18,8 @@ class Game
     client&.name = name
   end
 
-  def add_kill(killer: nil, killed: nil, mod: nil)
-    @kills.append(Kill.new(killer, killed, mod))
+  def add_kill(kill_info)
+    @kills.append(Kill.new(kill_info))
   end
 
   class Player
@@ -34,10 +34,11 @@ class Game
 
   class Kill
     attr_reader :killer_id, :killed_id, :mod_id
-    def initialize(killer_id, killed_id, mod_id)
-      @killer_id = killer_id
-      @killed_id = killed_id
-      @mod_id = mod_id
+
+    def initialize(kill_info)
+      @killer_id = kill_info[:killer_id]
+      @killed_id = kill_info[:killed_id]
+      @mod_id = kill_info[:mod_id]
     end
   end
 end

@@ -34,7 +34,7 @@ class GameTest < Minitest::Test
 
   def test_it_adds_a_kill
     game = Game.new
-    game.add_kill(killer: 1, killed: 2, mod: 3)
+    game.add_kill(killer_id: 1, killed_id: 2, mod_id: 3)
     assert game.kills.count == 1
 
     kill = game.kills.first

@@ -3,17 +3,25 @@
 require 'bundler/setup'
 
 require_relative 'entry'
+require_relative 'game'
 
 # TODO: Add option to receive from input
 filename = './resources/quake_logs.txt'
 
 @games = []
+def start_game
+  @games.append(Game.new)
+end
+
+def current_game
+  @games.last
+end
 
 File.open(filename, 'r') do |f|
   f.each_line do |log_line|
-    log_entry = Entry.new(log_line)
+    entry = Entry.new(log_line)
 
-    case log_entry.type
+    case entry.type
     when :init_game
       start_game
     when :client_connect
@@ -24,18 +32,12 @@ File.open(filename, 'r') do |f|
       current_game.add_kill(entry.kill_info)
     when :shutdown_game
       current_game.shutdown
-    else line_not_used
+      else nil
     end
   end
 end
 
-def start_game
-  @games.append(Game.new)
-end
-
-def current_game
-  @games.last
-end
+pp @games.count
 
 # Split line
 # [0] -> time

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'active_support/inflector'
 
 class Entry
   # TODO: Use types to define cases at main.rb
