@@ -18,6 +18,8 @@ File.open(filename, 'r') do |f|
       start_game
     when :client_connect
       current_game.connect_client(entry.client_id)
+    when :client_userinfo_changed
+      current_game.update_client(entry.client_id, entry.client_name)
     when :kill
       current_game.add_kill(entry.kill_info)
     when :shutdown_game
