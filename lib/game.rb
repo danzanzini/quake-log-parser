@@ -27,6 +27,7 @@ class Game
       total_kills: @kills.count,
       players: @players.map(&:name),
       kills: pretty_kills_report,
+      kills_by_mean: kills_by_mean_report
     }
   end
 
@@ -50,6 +51,14 @@ class Game
     report
   end
 
+  def kills_by_mean_report
+    report = {}
+    @kills.each do |kill|
+      report[kill.mod] = (report[kill.mod] || 0) + 1
+    end
+    report
+  end
+
   class Player
     attr_reader :id
     attr_accessor :name
@@ -61,7 +70,7 @@ class Game
   end
 
   class Kill
-    attr_reader :killer_id, :killed_id, :mod_id
+    attr_reader :killer_id, :killed_id, :mod
 
     def world_kill?
       killer_id == 1022
@@ -74,7 +83,7 @@ class Game
     def initialize(kill_info)
       @killer_id = kill_info[:killer_id]
       @killed_id = kill_info[:killed_id]
-      @mod_id = kill_info[:mod_id]
+      @mod = kill_info[:mod]
     end
   end
 end

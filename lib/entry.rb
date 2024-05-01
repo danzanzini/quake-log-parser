@@ -28,6 +28,6 @@ class Entry
 
     @kill_info ||= { killer_id: @log_array[2].to_i,
                      killed_id: @log_array[3].to_i,
-                     mod_id: @log_array[4].to_i }
+                     mod: @log_array.last }
   end
 end

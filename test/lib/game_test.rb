@@ -32,13 +32,13 @@ class GameTest < Minitest::Test
 
   def test_it_adds_a_kill
     game = Game.new
-    game.add_kill(killer_id: 1, killed_id: 2, mod_id: 3)
+    game.add_kill(killer_id: 1, killed_id: 2, mod: 3)
     assert game.kills.count == 1
 
     kill = game.kills.first
     assert kill&.killer_id == 1
     assert kill&.killed_id == 2
-    assert kill&.mod_id == 3
+    assert kill&.mod == 3
   end
 
   def test_it_generates_a_report
@@ -56,17 +56,17 @@ class GameTest < Minitest::Test
 
     (1..4).each do |killer|
       (1..4).each do |killed|
-        game.add_kill(killer_id: killer, killed_id: killed, mod_id: killer+killed)
+        game.add_kill(killer_id: killer, killed_id: killed, mod: 'MOD_ROCKET')
       end
-      game.add_kill(killer_id: 1022, killed_id: killer, mod_id: 1)
+      game.add_kill(killer_id: 1022, killed_id: killer, mod: 'MOD_TRIGGER_HURT')
     end
 
-    game.add_kill(killer_id: 2, killed_id: 1, mod_id: 1)
-    game.add_kill(killer_id: 3, killed_id: 2, mod_id: 2)
-    game.add_kill(killer_id: 3, killed_id: 4, mod_id: 2)
-    game.add_kill(killer_id: 4, killed_id: 1, mod_id: 3)
-    game.add_kill(killer_id: 4, killed_id: 2, mod_id: 3)
-    game.add_kill(killer_id: 4, killed_id: 3, mod_id: 3)
+    game.add_kill(killer_id: 2, killed_id: 1, mod: 'MOD_ROCKET_SPLASH')
+    game.add_kill(killer_id: 3, killed_id: 2, mod: 'MOD_ROCKET_SPLASH')
+    game.add_kill(killer_id: 3, killed_id: 4, mod: 'MOD_ROCKET_SPLASH')
+    game.add_kill(killer_id: 4, killed_id: 1, mod: 'MOD_ROCKET_SPLASH')
+    game.add_kill(killer_id: 4, killed_id: 2, mod: 'MOD_ROCKET_SPLASH')
+    game.add_kill(killer_id: 4, killed_id: 3, mod: 'MOD_ROCKET_SPLASH')
 
     comparing_hash = { total_kills: 26,
                        players: ['First player', 'Second player', 'Third player', 'Fourth player Reloaded'],
@@ -75,6 +75,11 @@ class GameTest < Minitest::Test
                          'Second player' => 2,
                          'Third player' => 3,
                          'Fourth player Reloaded' => 4
+                       },
+                       kills_by_mean: {
+                         'MOD_ROCKET' => 16,
+                         'MOD_TRIGGER_HURT' => 4,
+                         'MOD_ROCKET_SPLASH' => 6
                        }
                       }
 
