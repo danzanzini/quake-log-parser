@@ -28,7 +28,7 @@ class ReportGeneratorTest < Minitest::Test
     game.add_kill(killer_id: 4, killed_id: 2, mod: 'MOD_ROCKET_SPLASH')
     game.add_kill(killer_id: 4, killed_id: 3, mod: 'MOD_ROCKET_SPLASH')
 
-    comparing_hash = {
+    comparing_array = [{
       total_kills: 26,
       players: ['First player', 'Second player', 'Third player', 'Fourth player Reloaded'],
       kills: {
@@ -42,8 +42,8 @@ class ReportGeneratorTest < Minitest::Test
         'MOD_TRIGGER_HURT' => 4,
         'MOD_ROCKET_SPLASH' => 6
       }
-    }
+    }]
 
-    assert ReportGenerator.new(game).game_report == comparing_hash
+    assert ReportGenerator.new([game]).games_report == comparing_array
   end
 end

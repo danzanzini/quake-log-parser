@@ -7,7 +7,7 @@ ruby '3.3.0'
 # TODO: Group gems for test and 'production'
 
 gem 'minitest', '~> 5.22', '>= 5.22.3'
-gem 'simplecov'
+gem 'simplecov', require: false
 
 gem 'rubocop', '~> 1.62', '>= 1.62.1', require: false
 
