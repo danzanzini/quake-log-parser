@@ -50,6 +50,6 @@ class EntryTest < Minitest::Test
 
   def test_it_gets_the_kill_info
     entry = Entry.new(' 10:38 Kill: 5 7 6: Oootsimo killed Assasinu Credi by MOD_ROCKET')
-    assert entry.kill_info == { killer: 5, killed: 7, mod: 6 }
+    assert entry.kill_info == { killer_id: 5, killed_id: 7, mod_id: 6 }
   end
 end

@@ -23,6 +23,10 @@ class Entry
   end
 
   def kill_info
-    @kill_info ||= { killer: @log_array[2].to_i, killed: @log_array[3].to_i, mod: @log_array[4].to_i } if type == :kill
+    return if type != :kill
+
+    @kill_info ||= { killer_id: @log_array[2].to_i,
+                     killed_id: @log_array[3].to_i,
+                     mod_id: @log_array[4].to_i }
   end
 end

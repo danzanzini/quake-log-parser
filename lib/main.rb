@@ -39,9 +39,9 @@ end
 
 pp @games.count
 
-# Split line
-# [0] -> time
-# [1] -> Type [Kill, InitGame, ShutdownGame]
+@games.each_with_index do |game, idx|
+  game_report = { "game#{idx}": game.report }
+  pp game_report
+end
 
-# If Kill
-# Pra cada tipo, um split diferente
+
