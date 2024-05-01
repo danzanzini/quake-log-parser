@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require 'minitest/autorun'
-require_relative '../../lib/entry'
+require_relative '../test_helper'
 
 class EntryTest < Minitest::Test
   def test_it_gets_the_kill_type_from_log
