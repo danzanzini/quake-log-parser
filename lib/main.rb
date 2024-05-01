@@ -2,8 +2,9 @@
 
 require 'bundler/setup'
 
-require_relative 'entry'
-require_relative 'game'
+require_relative 'classes/entry'
+require_relative 'classes/game'
+require_relative 'services/report_generator'
 
 # TODO: Add option to receive from input
 LOG_FILE = './resources/quake_logs.txt'
@@ -39,14 +40,16 @@ def process_log_file(filename)
   end
 end
 
-def generate_reports
+def print_reports
   puts "Total games: #{@games.count}"
 
   @games.each_with_index do |game, idx|
-    game_report = { "game#{idx + 1}": game.report }
+    report = ReportGenerator.new(game).game_report
+    game_report = { "game#{idx + 1}": report }
     pp game_report
   end
+
 end
 
 process_log_file(LOG_FILE)
-generate_reports
+print_reports
