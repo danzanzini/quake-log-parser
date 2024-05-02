@@ -40,4 +40,33 @@ class GameTest < Minitest::Test
     assert kill&.killed_id == 2
     assert kill&.mod == 3
   end
+
+  class KillTest < Minitest::Test
+    def setup
+      @kill_info = { killer_id: 1, killed_id: 2, mod: 'MOD_RAILGUN' }
+      @kill = Game::Kill.new(@kill_info)
+    end
+
+    def test_initialize
+      assert_equal 1, @kill.killer_id
+      assert_equal 2, @kill.killed_id
+      assert_equal 'MOD_RAILGUN', @kill.mod
+    end
+
+    def test_world_kill?
+      refute @kill.world_kill?
+
+      @kill_info[:killer_id] = 1022
+      world_kill = Game::Kill.new(@kill_info)
+      assert world_kill.world_kill?
+    end
+
+    def test_self_kill?
+      refute @kill.self_kill?
+
+      @kill_info[:killer_id] = 2
+      self_kill = Game::Kill.new(@kill_info)
+      assert self_kill.self_kill?
+    end
+  end
 end
