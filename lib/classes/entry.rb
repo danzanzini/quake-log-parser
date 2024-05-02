@@ -15,7 +15,6 @@ class Entry
     @type ||= @log_array[1].gsub(':', '').underscore.to_sym
   end
 
-  # TODO: Test conditionals cases
   def client_id
     @client_id ||= %i[client_begin client_connect client_userinfo_changed].include?(type) ? @log_array[2].to_i : nil
   end

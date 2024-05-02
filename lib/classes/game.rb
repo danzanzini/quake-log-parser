@@ -35,6 +35,12 @@ class Game
   class Kill
     attr_reader :killer_id, :killed_id, :mod
 
+    def initialize(kill_info)
+      @killer_id = kill_info[:killer_id]
+      @killed_id = kill_info[:killed_id]
+      @mod = kill_info[:mod]
+    end
+
     def world_kill?
       killer_id == 1022
     end
@@ -43,10 +49,5 @@ class Game
       killer_id == killed_id
     end
 
-    def initialize(kill_info)
-      @killer_id = kill_info[:killer_id]
-      @killed_id = kill_info[:killed_id]
-      @mod = kill_info[:mod]
-    end
   end
 end

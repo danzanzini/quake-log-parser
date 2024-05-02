@@ -3,52 +3,42 @@
 require_relative '../test_helper'
 
 class EntryTest < Minitest::Test
-  def test_it_gets_the_kill_type_from_log
-    entry = Entry.new('21:07 Kill: 1022 2 22: <world> killed Isgalamido by MOD_TRIGGER_HURT')
-    assert entry.type == :kill
+  def setup
+    @init_game_log = '0:00 InitGame: \sv_floodProtect\1\sv_maxPing\0\sv_minPing\0\sv_maxRate\10000\sv_minRate\0\sv_hostname\Code Miner Server\g_gametype\0\sv_privateClients\2\sv_maxclients\16\sv_allowDownload\0\dmflags\0\fraglimit\20\timelimit\15\g_maxGameClients\0\capturelimit\8\version\ioq3 1.36 linux-x86_64 Apr 12 2009\protocol\68\mapname\q3dm17\gamename\baseq3\g_needpass\0'
+    @client_connect_log = '20:34 ClientConnect: 2'
+    @client_userinfo_changed_log = '20:38 ClientUserinfoChanged: 2 n\Isgalamido\t\0\model\xian/default\hmodel\xian/default\g_redteam\\g_blueteam\\c1\4\c2\5\hc\100\w\0\l\0\tt\0\tl\0'
+    @kill_log = '21:07 Kill: 1022 2 22: <world> killed Isgalamido by MOD_TRIGGER_HURT'
   end
 
-  def test_it_gets_the_client_begin_type_from_log
-    entry = Entry.new('20:38 ClientBegin: 2')
-    assert entry.type == :client_begin
+  def test_type
+    assert_equal :init_game, Entry.new(@init_game_log).type
+    assert_equal :client_connect, Entry.new(@client_connect_log).type
+    assert_equal :client_userinfo_changed, Entry.new(@client_userinfo_changed_log).type
+    assert_equal :kill, Entry.new(@kill_log).type
   end
 
-  def test_it_gets_the_client_connect_type_from_log
-    entry = Entry.new('21:15 ClientConnect: 2')
-    assert entry.type == :client_connect
+  def test_client_id
+    assert_nil Entry.new(@init_game_log).client_id
+    assert_equal 2, Entry.new(@client_connect_log).client_id
+    assert_equal 2, Entry.new(@client_userinfo_changed_log).client_id
+    assert_nil Entry.new(@kill_log).client_id
   end
 
-  def test_it_gets_the_client_user_info_changed_type_from_log
-    entry = Entry.new('21:15 ClientUserinfoChanged: 2 n\Isgalamido\t\0\model\uriel/zael\hmodel\uriel/zael\g_redteam\\g_blueteam\\c1\5\c2\5\hc\100\w\0\l\0\tt\0\tl\0')
-    assert entry.type == :client_userinfo_changed
+  def test_client_name
+    assert_nil Entry.new(@init_game_log).client_name
+    assert_nil Entry.new(@client_connect_log).client_name
+    assert_equal 'Isgalamido', Entry.new(@client_userinfo_changed_log).client_name
+    assert_nil Entry.new(@kill_log).client_name
   end
 
-  def test_it_gets_the_init_game_type_from_log
-    entry = Entry.new('20:37 InitGame: \sv_floodProtect\1\sv_maxPing\0\sv_minPing\0\sv_maxRate\10000\sv_minRate\0\sv_hostname\Code Miner Server\g_gametype\0\sv_privateClients\2\sv_maxclients\16\sv_allowDownload\0\bot_minplayers\0\dmflags\0\fraglimit\20\timelimit\15\g_maxGameClients\0\capturelimit\8\version\ioq3 1.36 linux-x86_64 Apr 12 2009\protocol\68\mapname\q3dm17\gamename\baseq3\g_needpass\0')
-    assert entry.type == :init_game
-  end
+  def test_kill_info
+    assert_nil Entry.new(@init_game_log).kill_info
+    assert_nil Entry.new(@client_connect_log).kill_info
+    assert_nil Entry.new(@client_userinfo_changed_log).kill_info
 
-  # TODO: Improve client_id tests to ensure them for all types
-  def test_it_returns_the_client_id_when_appropriate
-    entry = Entry.new('21:15 ClientUserinfoChanged: 2 n\Isgalamido\t\0\model\uriel/zael\hmodel\uriel/zael\g_redteam\\g_blueteam\\c1\5\c2\5\hc\100\w\0\l\0\tt\0\tl\0')
-    assert entry.client_id == 2
-  end
-
-  def test_it_returns_nil_for_client_id_when_appropriate
-    entry = Entry.new('21:07 Kill: 1022 2 22: <world> killed Isgalamido by MOD_TRIGGER_HURT')
-    assert entry.client_id.nil?
-  end
-
-  def test_it_gets_the_client_name
-    entry = Entry.new('21:15 ClientUserinfoChanged: 2 n\Isgalamido\t\0\model\uriel/zael\hmodel\uriel/zael\g_redteam')
-    assert entry.client_name == 'Isgalamido'
-
-    entry = Entry.new('21:15 ClientUserinfoChanged: 2 n\Dono da Bola\t\0\model\uriel/zael\hmodel\uriel/zael\g_redteam')
-    assert entry.client_name == 'Dono da Bola'
-  end
-
-  def test_it_gets_the_kill_info
-    entry = Entry.new(' 10:38 Kill: 5 7 6: Oootsimo killed Assasinu Credi by MOD_ROCKET')
-    assert entry.kill_info == { killer_id: 5, killed_id: 7, mod: 'MOD_ROCKET' }
+    kill_info = Entry.new(@kill_log).kill_info
+    assert_equal 1022, kill_info[:killer_id]
+    assert_equal 2, kill_info[:killed_id]
+    assert_equal 'MOD_TRIGGER_HURT', kill_info[:mod]
   end
 end
