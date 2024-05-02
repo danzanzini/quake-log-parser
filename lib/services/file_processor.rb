@@ -3,6 +3,9 @@
 require_relative '../classes/entry'
 require_relative '../classes/game'
 
+# Service responsible for processing the Quake game log file.
+# It reads the log file line by line, creates `Entry` objects for each log entry, and updates the corresponding `Game` object based on the entry type.
+# TODO: It has many responsibilities. There is room for improvement in this service.
 class FileProcessor
   def initialize(filename)
     @filename = filename

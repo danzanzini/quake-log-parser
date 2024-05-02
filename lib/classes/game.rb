@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# Represents a single game in the Quake game log.
+# It keeps track of game-related information, such as connected players and kills.
 class Game
   attr_reader :shutdown, :players, :kills
 
@@ -22,6 +24,7 @@ class Game
     @kills.append(Kill.new(kill_info))
   end
 
+  # Represents a client in the Quake game. It stores it's ID and current name
   class Player
     attr_reader :id
     attr_accessor :name
@@ -32,6 +35,9 @@ class Game
     end
   end
 
+  # Represents a kill event in the Quake game.
+  # It stores information about the killer, the victim, and the means of death (MOD).
+  # The class provides methods to determine if the kill was a suicide or a world kill.
   class Kill
     attr_reader :killer_id, :killed_id, :mod
 
@@ -48,6 +54,5 @@ class Game
     def self_kill?
       killer_id == killed_id
     end
-
   end
 end

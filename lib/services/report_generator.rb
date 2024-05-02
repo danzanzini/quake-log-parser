@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# This service generates a report for a list of Quake games.
+# It generates an array of game reports containing player information and kill details.
 class ReportGenerator
   def initialize(games)
     @games = games

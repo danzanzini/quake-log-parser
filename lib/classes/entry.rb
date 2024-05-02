@@ -2,6 +2,8 @@
 
 require 'active_support/inflector'
 
+# The `Game` class represents a single game in the Quake game log.
+# It keeps track of game-related information, such as connected players and kills.
 class Entry
   # TODO: Use types to define cases at main.rb
   TYPES = %i[client_begin client_connect client_userinfo_changed kill init_game].freeze
