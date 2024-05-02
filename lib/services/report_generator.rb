@@ -21,7 +21,7 @@ class ReportGenerator
   def kills_report_with_player_names(game)
     report = kills_report(game)
     game.players.each do |player|
-      report[player.name] = report.delete player.id
+      report[player.name] = (report.delete(player.id) || 0)
     end
     report
   end
