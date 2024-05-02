@@ -10,5 +10,20 @@ This Ruby application parses a Quake game log file and generates a report with i
 4. Run `rake run` to execute the application.
 5. Run `rake test` to run the tests.
 
-## Improvements
-- Test coverage. Several use cases were implemented during the development but edge cases were not covered.
+## Further improvements
+
+#### Test coverage and exception handling
+Several use cases were implemented as part of the development of the app, but edge cases were not covered.
+Exception handling was also not covered.
+
+#### FileProcessor
+As it is now, the FileProcessor has too many responsibilities and doesn't have a end to end test.
+The case clause where the entries are handled should be moved elsewhere making it more modular and testable.
+
+#### Type Handling
+The log types, i.e: `:kill, :client_connect`, are too loose in the code.
+We can improve it by creating a Enum class.
+
+#### Input receivable
+For now, only the file at `resources/quake_logs.txt` will be used to generate a report.
+It's possible to improve it by reading through input.
