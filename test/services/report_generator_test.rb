@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative '../test_helper'
 class ReportGeneratorTest < Minitest::Test
   def test_it_generates_a_report
     game = Game.new
